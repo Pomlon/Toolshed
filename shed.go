@@ -30,13 +30,15 @@ func (str Stronk) F(args ...string) string {
 	}
 	//BUG(Pomlon) This means F will replace one more occurence of {} (if present) with the last arg.
 	if len(foo) > len(args)+1 || len(foo) < len(args) {
+		//I know this should throw an error, but that would defeat this things purpose which is
+		//'just slap it anywhere and hope it works'. Maybe it should return the message instead?
 		fmt.Printf("Replace param count doesn't match replace wildcards %d to %d \n string: %s \n", len(foo), len(args), str.s)
 		return ""
 	}
 
 	for i, spl := range foo {
 		tmp := strings.TrimSpace(spl)
-		fmt.Println("replace counter ", replaceCounter)
+		//fmt.Println("replace counter ", replaceCounter)
 		foo[i] = strings.Replace(tmp, "{}", args[replaceCounter], 1)
 		if len(args)-1 > replaceCounter {
 			replaceCounter++
@@ -60,6 +62,7 @@ func Abs(i int) int {
 //ErrPanic freaks out on non-empty error
 func ErrPanic(e error) {
 	if e != nil {
+		fmt.Println("OMG!")
 		panic(e)
 	}
 }
