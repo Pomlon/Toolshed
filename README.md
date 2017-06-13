@@ -3,7 +3,7 @@ A collection of random tools and libs made by yours trully.
 
 I'll try to keep whatever is shoveled here documented, no pinky-promise though.
 
-##Installation
+# Installation
 Since this will probably interest people starting to code, how to install:
 ```
 go get github.com/Pomlon/Toolshed
