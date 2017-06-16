@@ -4,15 +4,15 @@ import "fmt"
 
 func Spawn() Logger {
 	return Logger{
-		level: 0,
+		level: 1,
 		logOuts: []LogOutputter{
 			LogConsole{},
 		},
 	}
 }
 
-var Info = 0
-var Warn = 1
+var Error = 0
+var Info = 1
 var Debug = 2
 
 type LogOutputter interface {
@@ -54,16 +54,16 @@ func (l Logger) SetLevel(logLevel int) {
 	l.level = logLevel
 }
 
-func (l Logger) Info(msg ...string) {
-	l.log(0, msg)
+func (l Logger) Error(msg ...string) {
+	l.log(Error, msg)
 }
 
-func (l Logger) Warn(msg ...string) {
-	l.log(1, msg)
+func (l Logger) Info(msg ...string) {
+	l.log(Info, msg)
 }
 
 func (l Logger) Debug(msg ...string) {
-	l.log(2, msg)
+	l.log(Debug, msg)
 }
 
 func (l Logger) log(lvl int, msg []string) {
