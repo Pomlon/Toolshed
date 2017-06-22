@@ -36,7 +36,7 @@ func (l LogConsole) LogOutput(msg []string) {
 }
 
 type LogFormatter interface {
-	Format(msg []string)
+	Format(msg []string) string
 }
 
 type Logger struct {
@@ -69,9 +69,9 @@ func (l Logger) Debug(msg ...string) {
 func (l Logger) log(lvl int, msg []string) {
 	if lvl <= l.level {
 		for _, logOut := range l.logOuts {
-			//logOut.Setup()
+
 			logOut.LogOutput(msg)
-			//logOut.Teardown()
+
 		}
 	}
 }
