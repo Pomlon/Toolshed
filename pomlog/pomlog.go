@@ -1,11 +1,9 @@
 package pomlog
 
-import "fmt"
-
 func Spawn() Logger {
 	return Logger{
 		level: 1,
-		logOuts: []LogOutputter{
+		LogOuts: []LogOutputter{
 			LogConsole{},
 		},
 	}
@@ -21,27 +19,14 @@ type LogOutputter interface {
 	LogOutput([]string)
 }
 
-type LogConsole struct {
-}
-
-func (l LogConsole) Setup() {}
-
-func (l LogConsole) Teardown() {}
-
-func (l LogConsole) LogOutput(msg []string) {
-	for _, ting := range msg {
-		fmt.Print(ting + " ")
-	}
-	fmt.Println()
-}
-
 type LogFormatter interface {
-	Format(msg []string) string
+	Format(msg []string) []string
 }
 
 type Logger struct {
-	level   int
-	logOuts []LogOutputter
+	level     int
+	LogOuts   []LogOutputter
+	LogFormat LogFormatter
 }
 
 //SetLevel sets the logging level. 0 - error, 1 - info, 2 - debug
@@ -68,9 +53,13 @@ func (l Logger) Debug(msg ...string) {
 
 func (l Logger) log(lvl int, msg []string) {
 	if lvl <= l.level {
-		for _, logOut := range l.logOuts {
+		for _, logOut := range l.LogOuts {
+			if l.LogFormat != nil {
+				logOut.LogOutput(l.LogFormat.Format(msg))
+			} else {
 
-			logOut.LogOutput(msg)
+				logOut.LogOutput(msg)
+			}
 
 		}
 	}
