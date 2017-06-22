@@ -44,7 +44,7 @@ type Logger struct {
 	logOuts []LogOutputter
 }
 
-//SetLevel sets the logging level. 0 - info, 1 - warn, 2 - debug
+//SetLevel sets the logging level. 0 - error, 1 - info, 2 - debug
 func (l Logger) SetLevel(logLevel int) {
 	if logLevel > 2 {
 		logLevel = 2
